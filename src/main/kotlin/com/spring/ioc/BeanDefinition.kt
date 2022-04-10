@@ -12,4 +12,5 @@ class BeanDefinition() {
                 e.printStackTrace()
             }
         }
+    var propertyValues: PropertyValues? = null
 }
