@@ -12,5 +12,5 @@ class BeanDefinition() {
                 e.printStackTrace()
             }
         }
-    var propertyValues: PropertyValues? = null
+    var propertyValues: PropertyValues = PropertyValues()
 }
