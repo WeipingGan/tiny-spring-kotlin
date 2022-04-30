@@ -17,7 +17,7 @@ abstract class AbstractBeanFactory : BeanFactory {
         return bean!!
     }
 
-    override fun registerBeanDefinition(name: String, beanDefinition: BeanDefinition) {
+    fun registerBeanDefinition(name: String, beanDefinition: BeanDefinition) {
         beanDefinitionMap[name] = beanDefinition
         beanDefinitionNames.add(name)
     }
