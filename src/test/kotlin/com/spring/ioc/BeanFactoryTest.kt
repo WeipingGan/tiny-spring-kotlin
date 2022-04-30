@@ -9,12 +9,12 @@ import org.junit.jupiter.api.Test
 class BeanFactoryTest {
 
     @Test
-    fun `register a bean in bean factory`() {
+    fun `register a bean in bean factory and lazy init`() {
         val xmlBeanDefinitionReader = XmlBeanDefinitionReader(ResourceLoader())
         xmlBeanDefinitionReader.loadBeanDefinition("tinyioc.xml")
 
         val autowireCapableBeanFactory = AutowireCapableBeanFactory()
-        for(beanDefinitionEntry in xmlBeanDefinitionReader.getRegistry().entries) {
+        for (beanDefinitionEntry in xmlBeanDefinitionReader.getRegistry().entries) {
             autowireCapableBeanFactory.registerBeanDefinition(beanDefinitionEntry.key, beanDefinitionEntry.value)
         }
 

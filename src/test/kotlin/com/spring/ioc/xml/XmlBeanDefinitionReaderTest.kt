@@ -5,7 +5,6 @@ import com.spring.ioc.io.ResourceLoader
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
-
 class XmlBeanDefinitionReaderTest {
 
     @Test

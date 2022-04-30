@@ -8,12 +8,14 @@ abstract class AbstractBeanFactory : BeanFactory {
     private val beanDefinitionMap = ConcurrentHashMap<String, BeanDefinition>()
 
     override fun getBean(name: String): Object {
-        return beanDefinitionMap[name]?.bean!!
+        var bean = beanDefinitionMap[name]?.bean
+        if (bean == null) {
+            bean = initBean(beanDefinitionMap[name]!!)
+        }
+        return bean!!
     }
 
     override fun registerBeanDefinition(name: String, beanDefinition: BeanDefinition) {
-        val bean = initBean(beanDefinition)
-        beanDefinition.bean = bean
         beanDefinitionMap[name] = beanDefinition
     }
 

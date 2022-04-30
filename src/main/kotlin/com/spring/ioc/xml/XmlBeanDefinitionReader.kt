@@ -2,13 +2,13 @@ package com.spring.ioc.xml
 
 import com.spring.ioc.AbstractBeanDefinitionReader
 import com.spring.ioc.BeanDefinition
+import com.spring.ioc.BeanReference
 import com.spring.ioc.PropertyValue
 import com.spring.ioc.io.ResourceLoader
 import org.w3c.dom.Document
 import org.w3c.dom.Element
 import java.io.InputStream
 import javax.xml.parsers.DocumentBuilderFactory
-
 
 class XmlBeanDefinitionReader(resourceLoader: ResourceLoader) : AbstractBeanDefinitionReader(resourceLoader) {
 
@@ -57,7 +57,19 @@ class XmlBeanDefinitionReader(resourceLoader: ResourceLoader) : AbstractBeanDefi
             if (node is Element) {
                 val name = node.getAttribute("name")
                 val value = node.getAttribute("value")
-                beanDefinition.propertyValues!!.addPropertyValue(PropertyValue(name, value as Object))
+                if (value != null && value.isNotEmpty()) {
+                    beanDefinition.propertyValues.addPropertyValue(PropertyValue(name, value as Object))
+                } else {
+                    val ref: String = node.getAttribute("ref")
+                    require(ref.isNotEmpty()) {
+                        (
+                            "Configuration problem: <property> element for property '" +
+                                name
+                            ) + "' must specify a ref or value"
+                    }
+                    val beanReference = BeanReference(ref) as Object
+                    beanDefinition.propertyValues.addPropertyValue(PropertyValue(name, beanReference))
+                }
             }
         }
     }
