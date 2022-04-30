@@ -21,4 +21,18 @@ class BeanFactoryTest {
         val bean = autowireCapableBeanFactory.getBean("helloWorldService") as HelloWorldService
         Assertions.assertEquals("Hello World!", bean.helloWorld())
     }
+
+    @Test
+    fun `register a bean in bean factory and pre init`() {
+        val xmlBeanDefinitionReader = XmlBeanDefinitionReader(ResourceLoader())
+        xmlBeanDefinitionReader.loadBeanDefinition("tinyioc.xml")
+
+        val autowireCapableBeanFactory = AutowireCapableBeanFactory()
+        for (beanDefinitionEntry in xmlBeanDefinitionReader.getRegistry().entries) {
+            autowireCapableBeanFactory.registerBeanDefinition(beanDefinitionEntry.key, beanDefinitionEntry.value)
+        }
+        autowireCapableBeanFactory.preInstantiateSingletons()
+        val bean = autowireCapableBeanFactory.getBean("helloWorldService") as HelloWorldService
+        Assertions.assertEquals("Hello World!", bean.helloWorld())
+    }
 }
