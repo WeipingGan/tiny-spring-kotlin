@@ -1,7 +1,7 @@
 package com.spring.ioc
 
 class BeanDefinition() {
-    var bean: Object? = null
+    var bean: Any? = null
     var beanClass: Class<*>? = null
     var beanClassName: String? = null
         set(value) {

@@ -9,7 +9,7 @@ abstract class AbstractBeanFactory : BeanFactory {
 
     private val beanDefinitionNames = arrayListOf<String>()
 
-    override fun getBean(name: String): Object {
+    override fun getBean(name: String): Any {
         var bean = beanDefinitionMap[name]?.bean
         if (bean == null) {
             bean = initBean(beanDefinitionMap[name]!!)
@@ -22,7 +22,7 @@ abstract class AbstractBeanFactory : BeanFactory {
         beanDefinitionNames.add(name)
     }
 
-    protected abstract fun initBean(beanDefinition: BeanDefinition): Object?
+    protected abstract fun initBean(beanDefinition: BeanDefinition): Any?
     fun preInstantiateSingletons() {
         val it = beanDefinitionNames.iterator()
         while (it.hasNext()) {

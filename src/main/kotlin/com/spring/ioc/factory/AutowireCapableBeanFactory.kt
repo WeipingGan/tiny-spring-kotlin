@@ -5,7 +5,7 @@ import com.spring.ioc.BeanReference
 
 class AutowireCapableBeanFactory : AbstractBeanFactory() {
 
-    override fun initBean(beanDefinition: BeanDefinition): Object? {
+    override fun initBean(beanDefinition: BeanDefinition): Any? {
         try {
             val bean = createBeanInstance(beanDefinition)
             beanDefinition.bean = bean
@@ -18,10 +18,11 @@ class AutowireCapableBeanFactory : AbstractBeanFactory() {
     }
 
     private fun createBeanInstance(beanDefinition: BeanDefinition) =
-        beanDefinition.beanClass!!.getDeclaredConstructor().newInstance() as Object
+        beanDefinition.beanClass!!.getDeclaredConstructor().newInstance() as Any
 
-    private fun setPropertyValues(bean: Object, beanDefinition: BeanDefinition) {
+    private fun setPropertyValues(bean: Any, beanDefinition: BeanDefinition) {
         beanDefinition.propertyValues.getPropertyValues().forEach { property ->
+            bean as Object
             val declaredField = bean.`class`.getDeclaredField(property.name)
             declaredField.isAccessible = true
             var value = property.value
