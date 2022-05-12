@@ -22,8 +22,7 @@ class AutowireCapableBeanFactory : AbstractBeanFactory() {
 
     private fun setPropertyValues(bean: Any, beanDefinition: BeanDefinition) {
         beanDefinition.propertyValues.getPropertyValues().forEach { property ->
-            bean as Object
-            val declaredField = bean.`class`.getDeclaredField(property.name)
+            val declaredField = bean.javaClass.getDeclaredField(property.name)
             declaredField.isAccessible = true
             var value = property.value
             if (value is BeanReference) {

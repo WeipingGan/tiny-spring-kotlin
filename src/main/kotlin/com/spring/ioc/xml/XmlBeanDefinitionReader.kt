@@ -57,8 +57,8 @@ class XmlBeanDefinitionReader(resourceLoader: ResourceLoader) : AbstractBeanDefi
             if (node is Element) {
                 val name = node.getAttribute("name")
                 val value = node.getAttribute("value")
-                if (value != null && value.isNotEmpty()) {
-                    beanDefinition.propertyValues.addPropertyValue(PropertyValue(name, value as Object))
+                if (value.isNotEmpty()) {
+                    beanDefinition.propertyValues.addPropertyValue(PropertyValue(name, value as Any))
                 } else {
                     val ref: String = node.getAttribute("ref")
                     require(ref.isNotEmpty()) {
@@ -67,7 +67,7 @@ class XmlBeanDefinitionReader(resourceLoader: ResourceLoader) : AbstractBeanDefi
                                 name
                             ) + "' must specify a ref or value"
                     }
-                    val beanReference = BeanReference(ref) as Object
+                    val beanReference = BeanReference(ref) as Any
                     beanDefinition.propertyValues.addPropertyValue(PropertyValue(name, beanReference))
                 }
             }
